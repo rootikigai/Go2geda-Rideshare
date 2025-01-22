@@ -1,67 +1,38 @@
 import React from "react";
 
-const RideList = ({ from, to }) => {
-  // Mock ride data
-  const rides = [
-    {
-      id: 1,
-      driver: "John Doe",
-      price: "$15",
-      departure: "8:00 AM",
-      route: `${from} to ${to}`,
-      car: "Toyota Corolla",
-      seatsAvailable: 2,
-    },
-    {
-      id: 2,
-      driver: "Jane Smith",
-      price: "$12",
-      departure: "9:30 AM",
-      route: `${from} to ${to}`,
-      car: "Honda Civic",
-      seatsAvailable: 1,
-    },
-    {
-      id: 3,
-      driver: "Alex Brown",
-      price: "$10",
-      departure: "11:00 AM",
-      route: `${from} to ${to}`,
-      car: "Ford Focus",
-      seatsAvailable: 3,
-    },
-  ];
-
-  return (
-    <div className="container mx-auto py-8">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
-        Available Rides from {from} to {to}
-      </h2>
-      <ul className="space-y-4">
-        {rides.map((ride) => (
-          <li
-            key={ride.id}
-            className="bg-white shadow-md rounded-lg p-6 flex justify-between items-center"
-          >
-            <div>
-              <h3 className="text-lg font-semibold text-gray-800">
-                {ride.driver}
-              </h3>
-              <p className="text-gray-600">{ride.route}</p>
-              <p className="text-gray-500">Departure: {ride.departure}</p>
-              <p className="text-gray-500">Car: {ride.car}</p>
-              <p className="text-gray-500">Seats Available: {ride.seatsAvailable}</p>
-            </div>
-            <div>
-              <span className="text-xl font-bold text-blue-600">
-                {ride.price}
-              </span>
-            </div>
-          </li>
-        ))}
-      </ul>
+const RideList = ({ from, to, date }) => (
+  <div className="container mx-auto py-8">
+    <h2 className="text-2xl font-bold text-gray-800 mb-4">
+      Available Rides from {from} to {to} on {date}
+    </h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {/* Placeholder Ride */}
+      <div className="border rounded-lg p-4 shadow hover:shadow-lg transition">
+        <h3 className="text-lg font-bold">John Doe</h3>
+        <p className="text-gray-600">Departure: 8:00 AM</p>
+        <p className="text-gray-600">Price: $10</p>
+        <button className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 mt-4">
+          Book Ride
+        </button>
+      </div>
+      <div className="border rounded-lg p-4 shadow hover:shadow-lg transition">
+        <h3 className="text-lg font-bold">Jane Smith</h3>
+        <p className="text-gray-600">Departure: 9:00 AM</p>
+        <p className="text-gray-600">Price: $12</p>
+        <button className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 mt-4">
+          Book Ride
+        </button>
+      </div>
+      <div className="border rounded-lg p-4 shadow hover:shadow-lg transition">
+        <h3 className="text-lg font-bold">Alex Johnson</h3>
+        <p className="text-gray-600">Departure: 10:00 AM</p>
+        <p className="text-gray-600">Price: $8</p>
+        <button className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 mt-4">
+          Book Ride
+        </button>
+      </div>
     </div>
-  );
-};
+  </div>
+);
 
 export default RideList;
