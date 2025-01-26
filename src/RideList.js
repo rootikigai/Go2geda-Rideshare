@@ -27,7 +27,7 @@ const RideList = ({ from, to, date }) => {
       }
     };
 
-    fetchRides();
+    fetchRides("http://localhost:5000/api/routes");
   }, [from, to]);
 
   return (

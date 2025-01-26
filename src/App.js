@@ -20,6 +20,12 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setShowRides(true); // Show ride listings on form submission
+    setFormData({
+      from: "",
+      to: "",
+      date: "",
+      passengers: "1",
+    });
   };
 
   return (
@@ -30,13 +36,18 @@ function App() {
           <header className="bg-white shadow-md">
             <div className="container mx-auto px-4 py-4 flex items-center justify-between">
               {/* Logo */}
-              <h1 className="text-2xl font-bold text-green-600">
+              <h1 className="logo flex items-center text-green-600 text-xl font-bold">
+                <img
+                  src={`${process.env.PUBLIC_URL}/icons/rr_logo.svg`}
+                  alt="Rizzo Logo"
+                  className="h-10 w-10 mr-auto"
+                />
                 Rizzo Rideshare
               </h1>
 
               {/* Navigation */}
               <nav>
-                <ul className="flex space-x-6">
+                <ul className="flex space-x-4 text-green-600">
                   <li>
                     <a
                       href="#home"
@@ -84,7 +95,10 @@ function App() {
                 Connect with fellow professionals and save on your rides in
                 Lagos.
               </p>
-              <form className="bg-white text-gray-800 rounded-lg shadow-md p-6 max-w-2xl mx-auto">
+              <form
+                className="bg-white text-gray-800 rounded-lg shadow-md p-6 max-w-2xl mx-auto"
+                onSubmit={handleSubmit}
+              >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div>
                     <label htmlFor="from" className="block font-medium mb-2">
@@ -93,6 +107,9 @@ function App() {
                     <input
                       type="text"
                       id="from"
+                      required
+                      value={formData.from}
+                      onChange={handleChange}
                       placeholder="Enter starting location"
                       className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-green-500"
                     />
@@ -104,6 +121,9 @@ function App() {
                     <input
                       type="text"
                       id="to"
+                      required
+                      value={formData.to}
+                      onChange={handleChange}
                       placeholder="Enter destination"
                       className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-green-500"
                     />
@@ -117,6 +137,9 @@ function App() {
                     <input
                       type="date"
                       id="date"
+                      required
+                      value={formData.date}
+                      onChange={handleChange}
                       className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-green-500"
                     />
                   </div>
@@ -129,6 +152,8 @@ function App() {
                     </label>
                     <select
                       id="passengers"
+                      value={formData.passengers || ""}
+                      onChange={handleChange}
                       className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-green-500"
                     >
                       <option value="1">1 Passenger</option>
@@ -156,9 +181,9 @@ function App() {
                 {/* Feature 1 */}
                 <div className="bg-white p-6 rounded-lg shadow-md">
                   <img
-                    src="https://via.placeholder.com/100"
+                    src={`${process.env.PUBLIC_URL}/icons/rr_car1.png`}
                     alt="Affordable Rides Icon"
-                    className="mx-auto mb-4"
+                    className="mx-auto mb-4 w-full max-w-[80px] sm:max-w-[100px] md:max-w-[120px] h-auto"
                   />
                   <h3 className="text-xl font-semibold mb-2 text-green-600">
                     Affordable Daily Rides
@@ -171,9 +196,9 @@ function App() {
                 {/* Feature 2 */}
                 <div className="bg-white p-6 rounded-lg shadow-md">
                   <img
-                    src="https://via.placeholder.com/100"
+                    src={`${process.env.PUBLIC_URL}/icons/rr_driver.png`}
                     alt="Verified Users Icon"
-                    className="mx-auto mb-4"
+                    className="mx-auto mb-4 w-full max-w-[80px] sm:max-w-[100px] md:max-w-[120px] h-auto"
                   />
                   <h3 className="text-xl font-semibold mb-2 text-green-600">
                     Verified Drivers and Passengers
@@ -186,9 +211,9 @@ function App() {
                 {/* Feature 3 */}
                 <div className="bg-white p-6 rounded-lg shadow-md">
                   <img
-                    src="https://via.placeholder.com/100"
+                    src={`${process.env.PUBLIC_URL}/icons/rr_booking.svg`}
                     alt="Convenient Booking Icon"
-                    className="mx-auto mb-4"
+                    className="mx-auto mb-4 w-full max-w-[80px] sm:max-w-[100px] md:max-w-[120px] h-auto"
                   />
                   <h3 className="text-xl font-semibold mb-2 text-green-600">
                     Convenient Booking
@@ -224,7 +249,7 @@ function App() {
                 Where do you want to drive to?
               </h2>
               <p className="text-gray-700 mb-6 max-w-xl mx-auto">
-                Let’s help you make some money with our ride on your regular
+                Let’s help you make some money with your ride on your regular
                 daily commute to work. Share your ride with fellow 9-to-5
                 workers and make the most of your journey.
               </p>
@@ -286,7 +311,7 @@ function App() {
                 <ul>
                   <li>
                     <a
-                      href="#"
+                      href="/all-carpool-routes"
                       className="text-gray-400 hover:text-white block mb-2"
                     >
                       All carpool routes
@@ -294,7 +319,7 @@ function App() {
                   </li>
                   <li>
                     <a
-                      href="#"
+                      href="/all-carpool-destinations"
                       className="text-gray-400 hover:text-white block mb-2"
                     >
                       All carpool destinations
@@ -309,7 +334,7 @@ function App() {
                 <ul>
                   <li>
                     <a
-                      href="#"
+                      href="/top-carpool-routes"
                       className="text-gray-400 hover:text-white block mb-2"
                     >
                       Ikeja → Lekki
@@ -317,7 +342,7 @@ function App() {
                   </li>
                   <li>
                     <a
-                      href="#"
+                      href="/ikeja-lekki"
                       className="text-gray-400 hover:text-white block mb-2"
                     >
                       Yaba → Victoria Island
@@ -325,7 +350,7 @@ function App() {
                   </li>
                   <li>
                     <a
-                      href="#"
+                      href="/yaba-victoria-island"
                       className="text-gray-400 hover:text-white block mb-2"
                     >
                       Ajah → Marina
@@ -340,7 +365,7 @@ function App() {
                 <ul>
                   <li>
                     <a
-                      href="#"
+                      href="/about"
                       className="text-gray-400 hover:text-white block mb-2"
                     >
                       How it works
@@ -348,7 +373,7 @@ function App() {
                   </li>
                   <li>
                     <a
-                      href="#"
+                      href="/how-it-works"
                       className="text-gray-400 hover:text-white block mb-2"
                     >
                       Help Center
@@ -356,7 +381,7 @@ function App() {
                   </li>
                   <li>
                     <a
-                      href="#"
+                      href="-help-center"
                       className="text-gray-400 hover:text-white block mb-2"
                     >
                       Careers
