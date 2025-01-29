@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import RideList from "./RideList";
+import Navbar from "./Navbar";
 
 function App() {
   const [formData, setFormData] = useState({
@@ -19,7 +20,15 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setShowRides(true); // Show ride listings on form submission
+    if (formData.from === formData.to) {
+      alert("Starting location and destination cannot be the same.");
+      return;
+    }
+    if (new Date(formData.date) < new Date()) {
+      alert("Date cannot be in the past.");
+      return;
+    }
+    setShowRides(true);
     setFormData({
       from: "",
       to: "",
@@ -30,63 +39,15 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-100">
+      <Navbar />
       {!showRides ? (
         <>
           {/* Header */}
           <header className="bg-white shadow-md">
-            <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-              {/* Logo */}
-              <h1 className="logo flex items-center text-green-600 text-xl font-bold">
-                <img
-                  src={`${process.env.PUBLIC_URL}/icons/rr_logo.svg`}
-                  alt="Rizzo Logo"
-                  className="h-10 w-10 mr-auto"
-                />
-                Rizzo Rideshare
-              </h1>
-
-              {/* Navigation */}
-              <nav>
-                <ul className="flex space-x-4 text-green-600">
-                  <li>
-                    <a
-                      href="#home"
-                      className="text-gray-700 hover:text-green-600"
-                    >
-                      Home
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#about"
-                      className="text-gray-700 hover:text-green-600"
-                    >
-                      About
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#contact"
-                      className="text-gray-700 hover:text-green-600"
-                    >
-                      Contact
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#publish"
-                      className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
-                    >
-                      Publish a ride
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
           </header>
 
           {/* Hero Section */}
-          <section className="bg-green-500 text-white text-center py-20">
+          <section className="bg-green-500 text-white text-center py-10">
             <div className="container mx-auto">
               <h1 className="text-4xl font-bold mb-4">
                 Your Daily Commute Made Easy
@@ -264,7 +225,7 @@ function App() {
               <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
                 Popular Routes in Lagos
               </h2>
-              <div className="grid gap-6 md:grid-cols-3">
+              <div className="grid gap-6 sm:grid-cols md:grid-cols-3">
                 {/* Route 1 */}
                 <div className="bg-white shadow-md rounded-lg p-6">
                   <h3 className="text-lg font-bold text-gray-800 mb-2">
@@ -381,7 +342,7 @@ function App() {
                   </li>
                   <li>
                     <a
-                      href="-help-center"
+                      href="/help-center"
                       className="text-gray-400 hover:text-white block mb-2"
                     >
                       Careers
@@ -403,7 +364,7 @@ function App() {
             <div className="mt-8 text-center border-t border-gray-700 pt-4">
               <p className="text-gray-400 text-sm">
                 &copy; {new Date().getFullYear()} Rizzo Rideshare. All rights
-                reserved.
+                reserved. @amansopinion
               </p>
             </div>
           </footer>
