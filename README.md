@@ -1,71 +1,99 @@
-# Getting Started with Create React App
+# 🚗 Rizzo Rideshare
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![React](https://img.shields.io/badge/Frontend-React-blue?logo=react)
+![Node.js](https://img.shields.io/badge/Backend-Node.js-green?logo=node.js)
+![Express](https://img.shields.io/badge/API-Express-lightgrey?logo=express)
+![License](https://img.shields.io/badge/license-MIT-yellow)
+![Status](https://img.shields.io/badge/status-in%20development-orange)
 
-## Available Scripts
+A simple **Carpooling App** built for **9-to-5 workers** who share rides with others going the same route.  
+This full-stack project uses **React** for the frontend and **Node.js (Express)** for the backend.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🌍 Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The **Rizzo Rideshare App** allows users to:
+- Browse available rides shared by other workers.
+- See ride details like pickup point, destination, and time.
+- Connect with other 9-to-5 commuters going in the same direction.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The app is structured to fetch ride data from a backend API and display it neatly in the frontend using React components.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🧱 Tech Stack
 
-### `npm run build`
+| Layer | Technology | Purpose |
+|-------|-------------|----------|
+| **Frontend** | [React](https://reactjs.org/) + [TailwindCSS](https://tailwindcss.com/) | User Interface |
+| **Backend** | [Node.js](https://nodejs.org/) + [Express](https://expressjs.com/) | API / Server |
+| **Communication** | REST API | Fetch rides and routes |
+| **Styling** | TailwindCSS | Responsive design |
+| **Tools** | ESLint, npm, Git | Development workflow |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 📁 Project Structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Rizzo-Rideshare/
+├── backend/
+│ ├── server.js # Express app entry point
+│ ├── routes/ # Route definitions
+│ ├── package.json
+│ └── (Some of my other files are here)
+│
+├── src/
+│ ├── api/
+│ │ └── api.js
+│ ├── components/
+│ │ ├── RideList.js
+│ │ └── Navbar.js
+│ ├── App.jsx
+│ ├── index.js
+│ └── index.css
+│
+├── public/
+│ └── index.html
+│
+├── package.json
+├── tailwind.config.js
+└── README.md
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## ⚙️ Getting Started
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 1 Clone the repository
+git clone https://github.com/rootikigai/Rizzo-Rideshare.git
+cd Rizzo-Rideshare
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 2 Install dependencies
+Frontend
+npm install
 
-## Learn More
+Backend
+cd backend
+npm install
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 3 Run the servers
+Start frontend (React)
+npm start
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The React app will run on http://localhost:3000
 
-### Code Splitting
+The backend API will run on http://localhost:5000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+🔗 API Endpoints
+/api/routes	GET	Fetch all available rides
+/api/routes/:id	GET	Fetch ride by ID
+/api/routes	POST	Add a new ride (future feature)
 
-### Analyzing the Bundle Size
+📄 License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+This project is licensed under the MIT License
 
-### Making a Progressive Web App
+Special thanks to the Semicolon Africa community for inspiring this full-stack journey.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-\n# A rideshare app for 9to5 workers to commute with other 9to5 workers going same route!
+Made with 💻 + ☕ by Kelvin Ifeanyi (IKIGAI)
