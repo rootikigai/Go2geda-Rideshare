@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-// Dummy ride data
 const rideData = [
   {
     id: 1,
@@ -29,9 +28,8 @@ const rideData = [
   },
 ];
 
-// Define the /api/routes endpoint
 router.get("/routes", (req, res) => {
-  res.json(rideData); // Send the ride data as JSON
+  res.json(rideData);
 });
 
 module.exports = router;
