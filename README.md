@@ -1,4 +1,4 @@
-# 🚗 Rizzo Rideshare
+# Go2geda Rideshare
 
 ![React](https://img.shields.io/badge/Frontend-React-blue?logo=react)
 ![Node.js](https://img.shields.io/badge/Backend-Node.js-green?logo=node.js)
@@ -13,7 +13,7 @@ This full-stack project uses **React** for the frontend and **Node.js (Express)*
 
 ## 🌍 Overview
 
-The **Rizzo Rideshare App** allows users to:
+The **Go2geda Rideshare App** allows users to:
 - Browse available rides shared by other workers.
 - See ride details like pickup point, destination, and time.
 - Connect with other 9-to-5 commuters going in the same direction.
@@ -36,7 +36,7 @@ The app is structured to fetch ride data from a backend API and display it neatl
 
 ## 📁 Project Structure
 
-Rizzo-Rideshare/
+Go2geda-Rideshare/
 ├── backend/
 │ ├── server.js # Express app entry point
 │ ├── routes/ # Route definitions
@@ -66,8 +66,8 @@ Rizzo-Rideshare/
 ## ⚙️ Getting Started
 
 ### 1 Clone the repository
-git clone https://github.com/rootikigai/Rizzo-Rideshare.git
-cd Rizzo-Rideshare
+git clone https://github.com/rootikigai/Go2geda-Rideshare.git
+cd Go2geda-Rideshare
 
 ### 2 Install dependencies
 Frontend
@@ -96,4 +96,4 @@ This project is licensed under the MIT License
 
 Special thanks to the Semicolon Africa community for inspiring this full-stack journey.
 
-Made with 💻 + ☕ by Kelvin Ifeanyi (IKIGAI)
+Made with confirm giran by Kelvin Ifeanyi (IKIGAI)
