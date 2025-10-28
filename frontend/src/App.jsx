@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import RideList from "./components/RideList";
-import Navbar from "./Navbar";
+import Navbar from "./components/Navbar";
 
 function App() {
   const [formData, setFormData] = useState({
@@ -137,7 +137,7 @@ function App() {
           <section className="bg-gray-100 py-12">
             <div className="container mx-auto text-center">
               <h2 className="text-2xl font-bold mb-8 text-gray-800">
-                Why Choose Rizzo Rideshare?
+                Why Choose Go2geda Rideshare?
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Feature 1 */}
@@ -194,7 +194,7 @@ function App() {
                 Help us keep you safe and secure
               </h2>
               <p className="text-gray-700 mb-6 max-w-2xl mx-auto">
-                At Rizzo Rideshare, your safety is our top priority. We’re
+                At Go2geda Rideshare, your safety is our top priority. We’re
                 committed to ensuring that every ride is as safe and reliable as
                 possible. Learn how we verify drivers, monitor trips, and
                 provide support for all riders and drivers.
@@ -268,7 +268,7 @@ function App() {
               {/* Column 1: How to travel */}
               <div>
                 <h3 className="text-lg font-bold mb-4">
-                  How to travel with Rizzo
+                  How to travel with Go2geda
                 </h3>
                 <ul>
                   <li>
@@ -364,7 +364,7 @@ function App() {
             {/* Bottom Section */}
             <div className="mt-8 text-center border-t border-gray-700 pt-4">
               <p className="text-gray-400 text-sm">
-                &copy; {new Date().getFullYear()} Rizzo Rideshare. All rights
+                &copy; {new Date().getFullYear()} Go2geda Rideshare. All rights
                 reserved. --IKIGAI--
               </p>
             </div>
