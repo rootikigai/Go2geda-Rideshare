@@ -5,11 +5,22 @@ export default {
     extend: {
       colors: {
         go2geda: {
-          light: "#c7f9cc", // light pastel green
-          DEFAULT: "#80ed99", // main green
-          dark: "#38a169", // darker shade for text or accents
+          light: "#9BE7A5",   
+          DEFAULT: "#05B116", 
+          dark: "#024D13",    
         },
-        danger: "#e63946", // red for logout or warnings
+        accent: {
+          yellow: "#FFD166",  
+          blue: "#118AB2",    
+        },
+        neutral: {
+          light: "#F9FAFB",   
+          DEFAULT: "#E5E7EB", 
+          dark: "#1F2937",    
+        },
+        danger: "#E63946",    
+        success: "#06D6A0",   
+        info: "#4ECDC4",      
       },
     },
   },
