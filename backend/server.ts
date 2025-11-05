@@ -9,20 +9,16 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Routes
 app.use("/api/rides", rideRoutes);
 app.use("/api/users", userRoutes);
 
-// Health check / test route
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello Go2geda");
 });
 
-// Start server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
