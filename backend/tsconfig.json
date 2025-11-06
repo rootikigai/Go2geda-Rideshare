@@ -17,7 +17,8 @@
     "declaration": true,
     "declarationMap": true,
     "allowImportingTsExtensions": true,
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "verbatimModuleSyntax": true
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules", "dist"]
