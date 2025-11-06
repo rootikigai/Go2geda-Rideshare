@@ -1,17 +1,21 @@
-import { Router } from "express";
 import type { Request, Response } from "express";
+import { Router } from "express";
+import { completeRide } from '../controllers/rideController.ts';
+import { authorizeRoles } from "../middleware/roleMiddleware.ts";
+import { ortentikate } from "../middleware/auth.ts";
+import { createRide } from "../controllers/rideController.ts";
+import { getUserRides } from "../controllers/rideController.ts";
 
-// Ride interface for TypeScript
 interface Ride {
   id: number;
   driverName: string;
   from: string;
   to: string;
   departureTime: string;
+  // returnTime: string;
   price: string;
 }
 
-// In-memory ride data
 const rideData: Ride[] = [
   { id: 1, driverName: "Kelvin Ifeanyi", from: "Ikeja", to: "Victoria Island", departureTime: "8:00 AM", price: "₦3000" },
   { id: 2, driverName: "Youdon Meanit", from: "Lekki", to: "Yaba", departureTime: "9:00 AM", price: "₦3500" },
@@ -20,9 +24,13 @@ const rideData: Ride[] = [
 
 const router = Router();
 
-// GET /api/rides/routes
 router.get("/routes", (req: Request, res: Response) => {
   res.json(rideData);
 });
+
+router.patch('/complete/:rideId', ortentikate, authorizeRoles('DRIVER'), completeRide)
+router.post('/request', ortentikate, authorizeRoles('PASSENGER'), createRide);
+router.get('/my-rides', ortentikate, getUserRides)
+router.get('/admin-dashboard', ortentikate, authorizeRoles('ADMIN'), getUserRides);
 
 export default router;
