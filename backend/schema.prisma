@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(PASSENGER)
+  createdAt DateTime @default(now())
+
+  passengerRides Ride[]        @relation("Passenger")
+  driverRides    Ride[]        @relation("RideDriver")
+  rideRequests   RideRequest[]
+}
+
+model Ride {
+  id            Int               @id @default(autoincrement())
+  passengerId   Int
+  driverId      Int?
+  origin        String
+  destination   String
+  departureTime String?
+  price         String?
+  requestStatus RideRequestStatus @default(PENDING)
+  status        RideStatus        @default(SCHEDULED)
+  createdAt     DateTime          @default(now())
+
+  passenger    User          @relation("Passenger", fields: [passengerId], references: [id])
+  driver       User?         @relation("RideDriver", fields: [driverId], references: [id])
+  rideRequests RideRequest[]
+}
+
+model RideRequest {
+  id          Int               @id @default(autoincrement())
+  rideId      Int
+  passengerId Int
+  status      RideRequestStatus @default(PENDING)
+  createdAt   DateTime          @default(now())
+
+  ride      Ride @relation(fields: [rideId], references: [id])
+  passenger User @relation(fields: [passengerId], references: [id])
+}
+
+enum Role {
+  ADMIN
+  DRIVER
+  PASSENGER
+}
+
+enum RideRequestStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  CANCELLED
+}
+
+enum RideStatus {
+  SCHEDULED
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
