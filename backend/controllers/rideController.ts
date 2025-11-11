@@ -10,18 +10,34 @@ export const getUserRides = async (req: Request, res: Response) => {
         let rides;
         if(user.role === 'PASSENGER'){
             rides = await prisma.ride.findMany({
-                where: { passengerId: user.userId }
+                where: {
+                    status: 'SCHEDULED',
+                    seatsAvailable: { gt: 0 },
+                },
             });
         }
-        // else if (user.role === 'DRIVER') {
-        //     rides = await prisma.ride.findMany({
-        //         where: { driverId: user.userId }
-        //     })
-        // }
+        else if (user.role === 'DRIVER') {
+            rides = await prisma.ride.findMany({
+                where: {
+                    driverId: user.userId,
+                    status: { 
+                        in: ['SCHEDULED', 'ONGOING'] 
+                    },
+                },
+            });
+        }
+        else if (user.role === "ADMIN") {
+            rides = await prisma.ride.findMany();
+        }
+        else{
+            return res.status(403).json({ message: 'Invalid role' })
+        }
+
+        res.status(200).json({ rides });
     } catch (error) {
-        
+        res.status(500).json({ message: "Error fetching rides", error });
     }
-}
+};
 
 
 export const completeRide = async (req: Request, res: Response) => {
@@ -47,10 +63,10 @@ export const completeRide = async (req: Request, res: Response) => {
 export const createRide = async (req: Request, res: Response) => {
     const user = (req as any).user;
 
-    if (user.role !== 'PASSENGER') {
-        return res.status(403).json({message: 'Only passengers can request rides'})
+    if (user.role !== 'DRIVER') {
+        return res.status(403).json({message: 'Only drivers can create rides'})
     }
-    const { origin, destination } = req.body;
+    const { origin, destination, seatsAvailable } = req.body;
 
     try {
         const ride = await prisma.ride.create({
@@ -58,6 +74,7 @@ export const createRide = async (req: Request, res: Response) => {
                 origin,
                 destination,
                 passengerId: user.userId,
+                seatsAvailable,
                 requestStatus: 'PENDING',
                 status: 'SCHEDULED'
             }
