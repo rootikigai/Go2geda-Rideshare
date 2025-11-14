@@ -5,6 +5,7 @@ import { cancelRide, completeRide, createRide, getUserRides } from "../controlle
 import { ortentikate } from "../middleware/auth.ts";
 import { authorizeRoles } from "../middleware/roleMiddleware.ts";
 import { requestToJoinRide, respondToRideRequest, getRideRequestsForDriver, cancelRideRequest } from "../controllers/rideRequestController.ts";
+import { createNotification, getUserNotifications, markNotificationAsRead } from "../controllers/notificationController.ts";
 
 const prisma = new PrismaClient();
 const router = Router();
@@ -46,5 +47,8 @@ router.patch('/ride-requests/:requestId/respond', ortentikate, authorizeRoles('D
 router.get('/driver/ride-requests', ortentikate, authorizeRoles('DRIVER'), getRideRequestsForDriver);
 router.patch('/:rideId/cancel', ortentikate, authorizeRoles('DRIVER', 'ADMIN'), cancelRide);
 router.patch('/ride-requests/:requestId/cancel', ortentikate, authorizeRoles('PASSENGER'), cancelRideRequest);
+router.get('/notifications', ortentikate, getUserNotifications);
+router.patch('/notifications/:notificationId/read', ortentikate, markNotificationAsRead);
+
 
 export default router;
