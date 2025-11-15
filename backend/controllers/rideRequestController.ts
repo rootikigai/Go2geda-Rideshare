@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { PrismaClient, RideRequestStatus } from "@prisma/client";
+import { createNotification } from "./notificationController";
 
 const prisma = new PrismaClient();
 
@@ -12,13 +13,12 @@ export const requestToJoinRide = async (req: Request, res: Response) => {
   }
 
   try {
-
     const ride = await prisma.ride.findUnique({
       where: { id: parseInt(rideId as string, 10) },
     });
 
     if (!ride || ride.seatsAvailable <= 0) {
-      return res.status(400).json({ message: 'Ride is full' })
+      return res.status(400).json({ message: 'Ride is full or not found' })
     }
 
     const existingRequest = await prisma.rideRequest.findFirst({
@@ -39,6 +39,12 @@ export const requestToJoinRide = async (req: Request, res: Response) => {
         status: RideRequestStatus.PENDING,
       },
     });
+
+    await createNotification(
+      ride.driverId!,
+      `Passenger ${user.name} has requested to join your ride from ${ride.origin} to ${ride.destination}.`,
+      'REQUEST'
+    )
 
     res.status(201).json({ message: "Ride request sent!", rideRequest })
   } catch (error) {
@@ -73,7 +79,7 @@ export const respondToRideRequest = async (req: Request, res: Response) => {
       return res.status(403).json({ message: 'You are not the driver of this ride' });
     }
 
-    if (decision === 'ACCEPTED') {
+    if (decision === RideRequestStatus.ACCEPTED) {
       if (rideRequest.ride.seatsAvailable <= 0) {
         return res.status(403).json({ message: "No seats available in this ride" })
       }
@@ -91,9 +97,17 @@ export const respondToRideRequest = async (req: Request, res: Response) => {
       data: { status: decision },
     });
 
-    res.status(200).json({ message: `Request ${decision.toLowerCase()}`, updatedRequest });
-  } catch (error) {
-    res.status(500).json({ message: 'Error responding to ride request', error });
+    await createNotification(
+      rideRequest.passengerId,
+      decision === RideRequestStatus.ACCEPTED
+        ? `Your request to join the ride from ${rideRequest.ride.origin} to ${rideRequest.ride.destination} has been accepted.`
+        : `Your request was declined.`,
+      'REQUEST_RESPONSE'
+    )
+
+    res.status(200).json({ message: `Request ${decision.toLowerCase()}`, data: updatedRequest });
+  } catch{
+    res.status(500).json({ message: 'Error responding to ride request' });
   }
 };
 
@@ -127,14 +141,13 @@ export const cancelRideRequest = async (req: Request, res: Response) => {
   const user = (req as any).user;
   const { requestId } = req.params;
 
-  if (user.role !== 'PASSENGER') {
-    return res.status(403).json({ message: 'Only passengers can cancel their ride requests' });
-  }
+  // if (user.role !== 'PASSENGER') {
+  //   return res.status(403).json({ message: 'Only passengers can cancel their ride requests' });
+  // }
 
   try {
-    const reqId = parseInt(requestId as string, 10);
     const rideRequest = await prisma.rideRequest.findUnique({
-      where: { id: reqId },
+      where: { id: parseInt(requestId as string, 10) },
       include: { ride: true },
     });
 
@@ -146,7 +159,7 @@ export const cancelRideRequest = async (req: Request, res: Response) => {
       return res.status(403).json({ message: 'You can only cancel your own request' });
     }
 
-    if (rideRequest.status === 'ACCEPTED') {
+    if (rideRequest.status === RideRequestStatus.ACCEPTED) {
       await prisma.ride.update({
         where: { id: rideRequest.rideId },
         data: { seatsAvailable: { increment: 1 } },
@@ -154,12 +167,18 @@ export const cancelRideRequest = async (req: Request, res: Response) => {
     }
 
     const cancelledRequest = await prisma.rideRequest.update({
-      where: { id: reqId },
-      data: { status: 'CANCELLED' },
+      where: { id: rideRequest.id },
+      data: { status: RideRequestStatus.CANCELLED },
     });
 
-    res.status(200).json({ message: 'Ride request cancelled successfully', cancelledRequest });
-  } catch (error) {
-    res.status(500).json({ message: 'Error cancelling ride request', error });
+    await createNotification(
+      rideRequest.ride.driverId!,
+      `Passenger ${user.name} has cancelled their request to join your ride.`,
+      'REQUEST_CANCELLED'
+    )
+
+    res.status(200).json({ message: 'Ride request cancelled', cancelledRequest });
+  } catch{
+    res.status(500).json({ message: 'Error cancelling ride request' });
   }
 };
