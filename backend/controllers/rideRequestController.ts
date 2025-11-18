@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { PrismaClient, RideRequestStatus } from "@prisma/client";
-import { createNotification } from "./notificationController";
+import { createNotification } from "./notificationController.ts";
 
 const prisma = new PrismaClient();
 
