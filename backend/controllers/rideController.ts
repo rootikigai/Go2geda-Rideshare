@@ -20,7 +20,7 @@ export const createRide = async (req: Request, res: Response) => {
                 driverId: Number(user.userId),
                 seatsAvailable: Number(seatsAvailable),
                 departureTime: new Date(departureTime),
-                price: String(price),
+                price: Number(price),
                 status: RideStatus.SCHEDULED,
             },
         });
@@ -71,7 +71,9 @@ export const getUserRides = async (req: Request, res: Response) => {
 
         res.status(200).json({ rides });
     } catch (error) {
-        res.status(500).json({ message: "Error fetching rides", error });
+        const err = error as Error;
+        console.error('Get User Rides error:', err);
+        res.status(500).json({ message: 'Error fetching rides', error: err.message });
     }
 };
 
@@ -89,8 +91,10 @@ export const completeRide = async (req: Request, res: Response) => {
             data: { status: RideStatus.COMPLETED }
         });
         res.status(200).json({ message: 'Ride marked as completed', data: ride });
-    } catch {
-        res.status(500).json({ message: 'Error completing ride' });
+    } catch (error){
+        const err = error as Error;
+        console.error('Complete Ride error:', err);
+        res.status(500).json({ message: 'Error completing ride', error: err.message });
     }
 };
 
@@ -136,7 +140,9 @@ export const cancelRide = async (req: Request, res: Response) => {
         }
 
         res.status(200).json({ message: 'Ride cancelled', cancelledRide });
-    } catch {
-        res.status(500).json({ message: 'Error cancelling ride' });
+    } catch (error){
+        const err = error as Error;
+        console.error('Cancel Ride error:', err);
+        res.status(500).json({ message: 'Error cancelling ride', error: err.message });
     }
 };
