@@ -48,7 +48,9 @@ export const requestToJoinRide = async (req: Request, res: Response) => {
 
     res.status(201).json({ message: "Ride request sent!", rideRequest })
   } catch (error) {
-    res.status(500).json({ message: "Error requesting ride", error })
+    const err = error as Error;
+    console.error('Request to Join Ride error:', err);
+    res.status(500).json({ message: 'Error requesting to join ride', error: err.message });
   }
 }
 
