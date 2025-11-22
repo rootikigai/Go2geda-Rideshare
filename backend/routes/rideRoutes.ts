@@ -42,7 +42,7 @@ router.patch('/complete/:rideId', authenticate, authorizeRoles('DRIVER'), comple
 router.post('/create-ride', authenticate, authorizeRoles('DRIVER'), createRide);
 router.get('/my-rides', authenticate, getUserRides)
 router.get('/admin-dashboard', authenticate, authorizeRoles('ADMIN'), getUserRides);
-router.post('/rides/:rideId/request', authenticate, authorizeRoles('PASSENGER'), requestToJoinRide);
+router.post('/:rideId/request', authenticate, authorizeRoles('PASSENGER'), requestToJoinRide);
 router.patch('/ride-requests/:requestId/respond', authenticate, authorizeRoles('DRIVER'), respondToRideRequest);
 router.get('/driver/ride-requests', authenticate, authorizeRoles('DRIVER'), getRideRequestsForDriver);
 router.patch('/:rideId/cancel', authenticate, authorizeRoles('DRIVER', 'ADMIN'), cancelRide);
